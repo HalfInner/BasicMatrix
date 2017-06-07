@@ -47,25 +47,6 @@ void TMatrix<T>::resize(uint64_t columns, uint64_t rows)
   dataMatrix.resize(col * row);
 }
 
-template <typename T> template <typename T2>
-TMatrix<T> TMatrix<T>::addMatrix(TMatrix<T2> &tm)
-{
-  if (col != tm.col || row != tm.row)
-    throw std::runtime_error("TMatrix::adding different sizes of matrix");
-  
-  TMatrix<T> resultMatrix(col, row);
-  
-  std::transform (
-    dataMatrix.begin(), 
-    dataMatrix.end(), 
-    tm.dataMatrix.begin(), 
-    resultMatrix.dataMatrix.begin(), 
-    [](int a, int b) { return a + b; });
-  
-  return resultMatrix;
-}
-
-
 template <typename T>
 void TMatrix<T>::setValue(uint64_t i, uint64_t j, T t)
 {
@@ -104,6 +85,25 @@ std::ostream& operator<<(std::ostream& os, TMatrix<T>& tm)
     return os;
 }
 
+//adding
+template <typename T> template <typename T2>
+TMatrix<T> TMatrix<T>::addMatrix(TMatrix<T2> &tm)
+{
+  if (col != tm.col || row != tm.row)
+    throw std::runtime_error("TMatrix::adding different sizes of matrix");
+  
+  TMatrix<T> resultMatrix(col, row);
+  
+  std::transform (
+    dataMatrix.begin(), 
+    dataMatrix.end(), 
+    tm.dataMatrix.begin(), 
+    resultMatrix.dataMatrix.begin(), 
+    [](int a, int b) { return a + b; });
+  
+  return resultMatrix;
+}
+
 template <typename T> template <typename T2>
 TMatrix<T> TMatrix<T>::operator+(TMatrix<T2> &tm)
 {
@@ -117,9 +117,38 @@ TMatrix<T>& TMatrix<T>::operator+=(TMatrix<T2> &tm)
   return *this;
 }
 
+//subtracting
 
+template <typename T> template <typename T2>
+TMatrix<T> TMatrix<T>::subMatrix(TMatrix<T2> &tm)
+{
+  if (col != tm.col || row != tm.row)
+    throw std::runtime_error("TMatrix::adding different sizes of matrix");
+  
+  TMatrix<T> resultMatrix(col, row);
+  
+  std::transform (
+    dataMatrix.begin(), 
+    dataMatrix.end(), 
+    tm.dataMatrix.begin(), 
+    resultMatrix.dataMatrix.begin(), 
+    [](int a, int b) { return a - b; });
+  
+  return resultMatrix;
+}
 
+template <typename T> template <typename T2>
+TMatrix<T> TMatrix<T>::operator-(TMatrix<T2> &tm)
+{
+  return subMatrix(tm);
+}
 
+template <typename T> template <typename T2>
+TMatrix<T>& TMatrix<T>::operator-=(TMatrix<T2> &tm)
+{
+  *this = this->addMatrix(tm);
+  return *this;
+}
 
 
 

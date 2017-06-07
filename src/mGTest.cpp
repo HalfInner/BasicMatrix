@@ -2,7 +2,8 @@
 
 #include "TMatrix.hpp"
 #include "GeneralMatrixTests.cpp"
-#include "OperationTests.cpp"
+#include "AddingTests.cpp"
+#include "SubtractingTests.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

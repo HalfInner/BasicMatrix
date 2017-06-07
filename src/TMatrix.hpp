@@ -15,16 +15,28 @@ public:
   
   void resize(uint64_t, uint64_t);
 
+  //adding
   template <typename T2>
   TMatrix<T> addMatrix(TMatrix<T2> &);
   
-  // + - / *
   template <typename T2>
   TMatrix<T> operator+(TMatrix<T2> &);
       
   template <typename T2>
   TMatrix<T>& operator+=(TMatrix<T2> &);
       
+  //subtracting
+  template <typename T2>
+  TMatrix<T> subMatrix(TMatrix<T2> &);
+  
+  template <typename T2>
+  TMatrix<T> operator-(TMatrix<T2> &);
+      
+  template <typename T2>
+  TMatrix<T>& operator-=(TMatrix<T2> &);
+  
+  
+  
   bool operator==(const TMatrix<T> &);    
 
   // ctr dst
