@@ -154,19 +154,19 @@ TMatrix<T>& TMatrix<T>::operator-=(const TMatrix<T2> &tm)
 template <typename T> template <typename T2>
 TMatrix<T> TMatrix<T>::mulMatrix(const TMatrix<T2> &)
 {
-  
+  return *this;
 }
 
 template <typename T> template <typename T2>
-TMatrix<T> TMatrix<T>::operator-(const TMatrix<T2> &)
+TMatrix<T> TMatrix<T>::operator*(const TMatrix<T2> &)
 {
-
+  return *this;
 }
     
 template <typename T> template <typename T2>
-TMatrix<T>& TMatrix<T>::operator-=(const TMatrix<T2> &)
+TMatrix<T>& TMatrix<T>::operator*=(const TMatrix<T2> &)
 {
-
+  return *this;
 }
 
 

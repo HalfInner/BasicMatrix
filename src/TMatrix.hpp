@@ -40,10 +40,10 @@ public:
   TMatrix<T> mulMatrix(const TMatrix<T2> &);
   
   template <typename T2>
-  TMatrix<T> operator-(const TMatrix<T2> &);
+  TMatrix<T> operator*(const TMatrix<T2> &);
       
   template <typename T2>
-  TMatrix<T>& operator-=(const TMatrix<T2> &);
+  TMatrix<T>& operator*=(const TMatrix<T2> &);
   
   
   
