@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
 
+#include "TMatrix.hpp"
 #include "GeneralMatrixTests.cpp"
+#include "OperationTests.cpp"
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

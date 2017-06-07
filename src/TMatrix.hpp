@@ -2,9 +2,7 @@
 #include <iostream>
 #include <cstdint>
 
-/*
-  Template of vectors
-*/
+
 template <typename T>
 class TMatrix
 {
@@ -17,21 +15,34 @@ public:
   
   void resize(uint64_t, uint64_t);
 
-  TMatrix<T>& addMatrix(const TMatrix<T> &);
+  template <typename T2>
+  TMatrix<T> addMatrix(TMatrix<T2> &);
+  
+  // + - / *
+  template <typename T2>
+  TMatrix<T> operator+(TMatrix<T2> &);
+      
+  template <typename T2>
+  TMatrix<T>& operator+=(TMatrix<T2> &);
+      
+  bool operator==(const TMatrix<T> &);    
 
+  // ctr dst
   TMatrix(uint64_t, uint64_t);
 
   TMatrix();
+  
+  ~TMatrix() {};
   
   TMatrix(const TMatrix<T> &);
   
   TMatrix<T>& operator=(const TMatrix<T> &);
   
-  bool operator==(const TMatrix<T> &);
 private:
   std::vector<T> dataMatrix;
-  uint64_t col, row;
+  uint64_t col, row;  
 };
+
 
 /* put body to seperate file */
 #include "TMatrix.cpp"

@@ -1,5 +1,7 @@
+#pragma once
 #include <sstream>
 #include <memory>
+#include <algorithm>
 
 template <typename T>
 TMatrix<T>::TMatrix(uint64_t columns, uint64_t rows)
@@ -11,9 +13,7 @@ TMatrix<T>::TMatrix(uint64_t columns, uint64_t rows)
 template <typename T>
 TMatrix<T>::TMatrix()
   : TMatrix(0, 0)
-{
-
-}
+{}
 
 template <typename T>
 std::string TMatrix<T>::printMatrix()
@@ -47,11 +47,24 @@ void TMatrix<T>::resize(uint64_t columns, uint64_t rows)
   dataMatrix.resize(col * row);
 }
 
-template <typename T>
-TMatrix<T>& TMatrix<T>::addMatrix(const TMatrix<T> &)
+template <typename T> template <typename T2>
+TMatrix<T> TMatrix<T>::addMatrix(TMatrix<T2> &tm)
 {
+  if (col != tm.col || row != tm.row)
+    throw std::runtime_error("TMatrix::adding different sizes of matrix");
   
+  TMatrix<T> resultMatrix(col, row);
+  
+  std::transform (
+    dataMatrix.begin(), 
+    dataMatrix.end(), 
+    tm.dataMatrix.begin(), 
+    resultMatrix.dataMatrix.begin(), 
+    [](int a, int b) { return a + b; });
+  
+  return resultMatrix;
 }
+
 
 template <typename T>
 void TMatrix<T>::setValue(uint64_t i, uint64_t j, T t)
@@ -81,5 +94,40 @@ template <typename T>
 TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &tm)
 {
   dataMatrix = tm.dataMatrix;
+  return *this;
 }
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, TMatrix<T>& tm)
+{
+    os << tm.printMatrix();
+    return os;
+}
+
+template <typename T> template <typename T2>
+TMatrix<T> TMatrix<T>::operator+(TMatrix<T2> &tm)
+{
+  return addMatrix(tm);
+}
+
+template <typename T> template <typename T2>
+TMatrix<T>& TMatrix<T>::operator+=(TMatrix<T2> &tm)
+{
+  *this = this->addMatrix(tm);
+  return *this;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

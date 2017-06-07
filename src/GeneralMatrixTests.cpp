@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include "TMatrix.hpp"
 
 TEST(MatrixBasics, Printing)
 {
@@ -24,13 +23,11 @@ TEST(MatrixBasics, Resizing)
   ASSERT_TRUE(m1 == m2);
 } 
 
-TEST(MatrixBasics, Shits)
+TEST(MatrixBasics, Test)
 {  
   TMatrix<int> matrix(5,2);
   
   matrix.setValue(1, 1, 42);
   
   matrix.resize(2, 4);
-  
-  std::cout << matrix.printMatrix(); 
 }
