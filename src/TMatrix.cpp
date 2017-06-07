@@ -87,7 +87,7 @@ std::ostream& operator<<(std::ostream& os, TMatrix<T>& tm)
 
 //adding
 template <typename T> template <typename T2>
-TMatrix<T> TMatrix<T>::addMatrix(TMatrix<T2> &tm)
+TMatrix<T> TMatrix<T>::addMatrix(const TMatrix<T2> &tm)
 {
   if (col != tm.col || row != tm.row)
     throw std::runtime_error("TMatrix::adding different sizes of matrix");
@@ -105,13 +105,13 @@ TMatrix<T> TMatrix<T>::addMatrix(TMatrix<T2> &tm)
 }
 
 template <typename T> template <typename T2>
-TMatrix<T> TMatrix<T>::operator+(TMatrix<T2> &tm)
+TMatrix<T> TMatrix<T>::operator+(const TMatrix<T2> &tm)
 {
   return addMatrix(tm);
 }
 
 template <typename T> template <typename T2>
-TMatrix<T>& TMatrix<T>::operator+=(TMatrix<T2> &tm)
+TMatrix<T>& TMatrix<T>::operator+=(const TMatrix<T2> &tm)
 {
   *this = this->addMatrix(tm);
   return *this;
@@ -120,7 +120,7 @@ TMatrix<T>& TMatrix<T>::operator+=(TMatrix<T2> &tm)
 //subtracting
 
 template <typename T> template <typename T2>
-TMatrix<T> TMatrix<T>::subMatrix(TMatrix<T2> &tm)
+TMatrix<T> TMatrix<T>::subMatrix(const TMatrix<T2> &tm)
 {
   if (col != tm.col || row != tm.row)
     throw std::runtime_error("TMatrix::adding different sizes of matrix");
@@ -138,16 +138,35 @@ TMatrix<T> TMatrix<T>::subMatrix(TMatrix<T2> &tm)
 }
 
 template <typename T> template <typename T2>
-TMatrix<T> TMatrix<T>::operator-(TMatrix<T2> &tm)
+TMatrix<T> TMatrix<T>::operator-(const TMatrix<T2> &tm)
 {
   return subMatrix(tm);
 }
 
 template <typename T> template <typename T2>
-TMatrix<T>& TMatrix<T>::operator-=(TMatrix<T2> &tm)
+TMatrix<T>& TMatrix<T>::operator-=(const TMatrix<T2> &tm)
 {
-  *this = this->addMatrix(tm);
+  *this = this->subMatrix(tm);
   return *this;
+}
+
+//multiplying
+template <typename T> template <typename T2>
+TMatrix<T> TMatrix<T>::mulMatrix(const TMatrix<T2> &)
+{
+  
+}
+
+template <typename T> template <typename T2>
+TMatrix<T> TMatrix<T>::operator-(const TMatrix<T2> &)
+{
+
+}
+    
+template <typename T> template <typename T2>
+TMatrix<T>& TMatrix<T>::operator-=(const TMatrix<T2> &)
+{
+
 }
 
 

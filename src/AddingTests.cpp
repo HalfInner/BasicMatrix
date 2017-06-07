@@ -29,6 +29,21 @@ TEST(MatrixBasics, AddingToItself)
   ASSERT_TRUE(m1 == expectedMatrix);
 } 
 
+TEST(MatrixBasics, AddingManyMatrixes)
+{
+  TMatrix<int> m1(5,2), m2(5, 2), m3(5, 2), expectedMatrix(5, 2);
+  
+  m1.setValue(0,0, 5);
+  m2.setValue(0,0, 10);
+  m3.setValue(0,0, 15);
+  
+  expectedMatrix.setValue(0, 0, 35);
+  
+  m1 += m1 + m2 + m3;
+  
+  ASSERT_TRUE(m1 == expectedMatrix);
+} 
+
 TEST(MatrixBasics, AddingDifferentSize)
 {
   TMatrix<int> m1(5,2), m2(2, 5);

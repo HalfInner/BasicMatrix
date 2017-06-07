@@ -17,23 +17,33 @@ public:
 
   //adding
   template <typename T2>
-  TMatrix<T> addMatrix(TMatrix<T2> &);
+  TMatrix<T> addMatrix(const TMatrix<T2> &);
   
   template <typename T2>
-  TMatrix<T> operator+(TMatrix<T2> &);
+  TMatrix<T> operator+(const TMatrix<T2> &);
       
   template <typename T2>
-  TMatrix<T>& operator+=(TMatrix<T2> &);
+  TMatrix<T>& operator+=(const TMatrix<T2> &);
       
   //subtracting
   template <typename T2>
-  TMatrix<T> subMatrix(TMatrix<T2> &);
+  TMatrix<T> subMatrix(const TMatrix<T2> &);
   
   template <typename T2>
-  TMatrix<T> operator-(TMatrix<T2> &);
+  TMatrix<T> operator-(const TMatrix<T2> &);
       
   template <typename T2>
-  TMatrix<T>& operator-=(TMatrix<T2> &);
+  TMatrix<T>& operator-=(const TMatrix<T2> &);
+  
+  //multiplying
+  template <typename T2>
+  TMatrix<T> mulMatrix(const TMatrix<T2> &);
+  
+  template <typename T2>
+  TMatrix<T> operator-(const TMatrix<T2> &);
+      
+  template <typename T2>
+  TMatrix<T>& operator-=(const TMatrix<T2> &);
   
   
   

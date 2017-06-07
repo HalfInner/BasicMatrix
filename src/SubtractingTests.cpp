@@ -22,9 +22,25 @@ TEST(MatrixBasics, SubtractingFromItself)
   m1.setValue(0,0, 5);
   m2.setValue(0,0, 10);
   
-  expectedMatrix.setValue(0, 0, 15);
+  expectedMatrix.setValue(0, 0, -5);
   
   m1 -= m2;
+  
+  ASSERT_TRUE(m1 == expectedMatrix);
+} 
+
+TEST(MatrixBasics, SubtractingManyMatrixes)
+{
+  TMatrix<int> m1(5,2), m2(5, 2), m3(5, 2), expectedMatrix(5, 2);
+  
+  m1.setValue(0,0, 5);
+  m2.setValue(0,0, 10);
+  m3.setValue(0,0, 15);
+  
+  expectedMatrix.setValue(0, 0, 25);
+  
+  //x = 5 - (5 - 10 - 15) = 5 - (-20) = 25
+  m1 -= m1 - m2 - m3;
   
   ASSERT_TRUE(m1 == expectedMatrix);
 } 
