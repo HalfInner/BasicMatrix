@@ -74,6 +74,8 @@ TMatrix<T>::TMatrix(const TMatrix<T> &tm)
 template <typename T>
 TMatrix<T>& TMatrix<T>::operator=(const TMatrix<T> &tm)
 {
+  row = tm.row;
+  col = tm.col;
   dataMatrix = tm.dataMatrix;
   return *this;
 }
@@ -118,12 +120,11 @@ TMatrix<T>& TMatrix<T>::operator+=(const TMatrix<T2> &tm)
 }
 
 //subtracting
-
 template <typename T> template <typename T2>
 TMatrix<T> TMatrix<T>::subMatrix(const TMatrix<T2> &tm)
 {
   if (col != tm.col || row != tm.row)
-    throw std::runtime_error("TMatrix::adding different sizes of matrix");
+    throw std::runtime_error("TMatrix::subtracting different sizes of matrix");
   
   TMatrix<T> resultMatrix(col, row);
   
@@ -152,20 +153,34 @@ TMatrix<T>& TMatrix<T>::operator-=(const TMatrix<T2> &tm)
 
 //multiplying
 template <typename T> template <typename T2>
-TMatrix<T> TMatrix<T>::mulMatrix(const TMatrix<T2> &)
+TMatrix<T> TMatrix<T>::mulMatrix(const TMatrix<T2> &tm)
 {
-  return *this;
+  if (row != tm.col)
+    throw std::runtime_error("TMatrix::multiplying M1.row != M2.col");
+  
+  TMatrix<T> resultMatrix(tm.col, row);
+  
+  for(size_t i = 0; i < row; i++)
+    for(size_t j = 0; j < tm.col; j++)
+      for(size_t k = 0; k < col; k++)
+      {
+        resultMatrix.dataMatrix[i * tm.col + j] 
+          += dataMatrix[i * col + k] * tm.dataMatrix[k * row + j];
+      }
+      
+  return resultMatrix;
 }
 
 template <typename T> template <typename T2>
-TMatrix<T> TMatrix<T>::operator*(const TMatrix<T2> &)
+TMatrix<T> TMatrix<T>::operator*(const TMatrix<T2> &tm)
 {
-  return *this;
+  return mulMatrix(tm);
 }
     
 template <typename T> template <typename T2>
-TMatrix<T>& TMatrix<T>::operator*=(const TMatrix<T2> &)
+TMatrix<T>& TMatrix<T>::operator*=(const TMatrix<T2> &tm)
 {
+  *this = this->mulMatrix(tm);
   return *this;
 }
 

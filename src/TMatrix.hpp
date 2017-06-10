@@ -35,7 +35,7 @@ public:
   template <typename T2>
   TMatrix<T>& operator-=(const TMatrix<T2> &);
   
-  //multiplying
+  //multiplication
   template <typename T2>
   TMatrix<T> mulMatrix(const TMatrix<T2> &);
   
@@ -44,8 +44,6 @@ public:
       
   template <typename T2>
   TMatrix<T>& operator*=(const TMatrix<T2> &);
-  
-  
   
   bool operator==(const TMatrix<T> &);    
 
