@@ -60,13 +60,27 @@ TEST(MatrixBasics, MultiplicatinWithItself)
 
 TEST(MatrixBasics, MultiplayingManyMatrixes)
 {
-  TMatrix<int> m1(5,2), m2(5, 2), m3(5, 2), expectedMatrix(5, 2);
+  TMatrix<int> m1(2,2), m2(2, 2), m3(2, 2), expectedMatrix(2, 2);
   
-  m1.setValue(0,0, 5);
-  m2.setValue(0,0, 10);
-  m3.setValue(0,0, 15);
+  m1.setValue(0,0, 2);
+  m1.setValue(1,0, 2);
+  m1.setValue(0,1, 2);
+  m1.setValue(1,1, 2);
   
-  expectedMatrix.setValue(0, 0, 25);
+  m2.setValue(0,0, 3);
+  m2.setValue(1,0, 3);
+  m2.setValue(0,1, 3);
+  m2.setValue(1,1, 3);
+  
+  m3.setValue(0,0, 4);
+  m3.setValue(1,0, 4);
+  m3.setValue(0,1, 4);
+  m3.setValue(1,1, 4);
+  
+  expectedMatrix.setValue(0, 0, 384);
+  expectedMatrix.setValue(1, 0, 384);
+  expectedMatrix.setValue(0, 1, 384);
+  expectedMatrix.setValue(1, 1, 384);
   
   m1 *= m1 * m2 * m3;
   
@@ -75,12 +89,12 @@ TEST(MatrixBasics, MultiplayingManyMatrixes)
 
 TEST(MatrixBasics, MultiplayingDifferentSize)
 {
-  TMatrix<int> m1(5,2), m2(2, 5);
+  TMatrix<int> m1(5,2), m2(5, 2);
   
   try 
   {
     auto m3 = m1 * m2;
-    FAIL() << "Subtract different sized matrixes is allowed";
+    FAIL();
   }
   catch (std::runtime_error e)
   {
