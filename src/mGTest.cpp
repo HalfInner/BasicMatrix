@@ -5,6 +5,8 @@
 #include "AddingTests.cpp"
 #include "SubtractingTests.cpp"
 #include "MultiplayingTests.cpp"
+#include "ScalarTests.cpp"
+
 
 int main(int argc, char **argv) {
   ::testing::InitGoogleTest(&argc, argv);

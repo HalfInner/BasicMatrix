@@ -2,6 +2,7 @@
 #include <sstream>
 #include <memory>
 #include <algorithm>
+#include <type_traits>
 
 template <typename T>
 TMatrix<T>::TMatrix(uint64_t columns, uint64_t rows)
@@ -68,7 +69,7 @@ T TMatrix<T>::getValue(uint64_t i, uint64_t j)
 template <typename T>
 TMatrix<T>::TMatrix(const TMatrix<T> &tm)
 {
-  dataMatrix = tm.dataMatrix;
+  *this = tm;
 }
 
 template <typename T>
@@ -101,7 +102,7 @@ TMatrix<T> TMatrix<T>::addMatrix(const TMatrix<T2> &tm)
     dataMatrix.end(), 
     tm.dataMatrix.begin(), 
     resultMatrix.dataMatrix.begin(), 
-    [](int a, int b) { return a + b; });
+    [](T a, T2 b) { return a + b; });
   
   return resultMatrix;
 }
@@ -125,15 +126,15 @@ TMatrix<T> TMatrix<T>::subMatrix(const TMatrix<T2> &tm)
 {
   if (col != tm.col || row != tm.row)
     throw std::runtime_error("TMatrix::subtracting different sizes of matrix");
-  
+
   TMatrix<T> resultMatrix(col, row);
-  
+
   std::transform (
     dataMatrix.begin(), 
     dataMatrix.end(), 
     tm.dataMatrix.begin(), 
     resultMatrix.dataMatrix.begin(), 
-    [](int a, int b) { return a - b; });
+    [](T a, T2 b) { return a - b; });
   
   return resultMatrix;
 }
@@ -157,9 +158,9 @@ TMatrix<T> TMatrix<T>::mulMatrix(const TMatrix<T2> &tm)
 {
   if (row != tm.col)
     throw std::runtime_error("TMatrix::multiplying M1.row != M2.col");
-  
+
   TMatrix<T> resultMatrix(tm.col, row);
-  
+
   for(size_t i = 0; i < row; i++)
     for(size_t j = 0; j < tm.col; j++)
       for(size_t k = 0; k < col; k++)
@@ -167,7 +168,7 @@ TMatrix<T> TMatrix<T>::mulMatrix(const TMatrix<T2> &tm)
         resultMatrix.dataMatrix[i * tm.col + j] 
           += dataMatrix[i * col + k] * tm.dataMatrix[k * row + j];
       }
-      
+
   return resultMatrix;
 }
 
@@ -176,21 +177,61 @@ TMatrix<T> TMatrix<T>::operator*(const TMatrix<T2> &tm)
 {
   return mulMatrix(tm);
 }
-    
+
 template <typename T> template <typename T2>
 TMatrix<T>& TMatrix<T>::operator*=(const TMatrix<T2> &tm)
 {
   *this = this->mulMatrix(tm);
+
   return *this;
 }
 
+template <typename T> template <typename T2>
+TMatrix<T> TMatrix<T>::mulMatrix(const T2 &scalar)
+{
+  auto resultMatrix = *this;
 
+  std::transform(
+    dataMatrix.begin(), 
+    dataMatrix.end(),
+    resultMatrix.dataMatrix.begin(), 
+    [&](T a) { return a * scalar; });
 
+  return resultMatrix;
+}
 
+template <typename T> template <typename T2>
+TMatrix<T> TMatrix<T>::operator*(const T2 &tm)
+{
+  return mulMatrix(tm);
+}
 
+template <typename T> template <typename T2>
+TMatrix<T>& TMatrix<T>::operator*=(const T2 &tm)
+{
+  *this = this->mulMatrix(tm);
 
+  return *this;
+}
 
+//dividing
+template <typename T> template <typename T2>
+TMatrix<T> TMatrix<T>::divMatrix(const TMatrix<T2> &tm)
+{
+  throw std::runtime_error("TMatrix does not support dividing yet:<");
 
+  return tm;
+}
 
+template <typename T> template <typename T2>
+TMatrix<T> TMatrix<T>::operator/(const TMatrix<T2> &tm)
+{
+  return divMatrix(tm);
+}
 
-
+template <typename T> template <typename T2>
+TMatrix<T>& TMatrix<T>::operator/=(const TMatrix<T2> &tm)
+{
+  *this = this->divMatrix(tm);
+  return *this;
+}
