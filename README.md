@@ -6,7 +6,7 @@ Very un-efficient.
 
 ## Supported operation
  * mul - multiply
- * sub - substract
+ * sub - subtract
  * add - add
 
 ## Testing
