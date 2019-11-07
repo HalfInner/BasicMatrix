@@ -1,3 +1,6 @@
+#ifndef BASIC_MATRIX_T_MATRIX_HH
+#define BASIC_MATRIX_T_MATRIX_HH
+
 #include <vector>
 #include <iostream>
 #include <cstdint>
@@ -83,3 +86,5 @@ private:
 
 /* put body to seperate file */
 #include "TMatrix.cpp"
+
+#endif BASIC_MATRIX_T_MATRIX_HH
