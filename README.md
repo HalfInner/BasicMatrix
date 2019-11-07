@@ -1,7 +1,13 @@
-#BasicMatrix
+# Basic Matrix
 
-Example matrix class on templates.
-It is not fully completed. Only general part works.
-At the moment only mul/sub/add are supported.
+## Description
+Example matrix class on templates. It is not fully completed. Only general part works.
+Very un-efficient. 
 
-For unit tests I used GTest library. It's covered it only in part.
+## Supported operation
+ * mul - multiply
+ * sub - substract
+ * add - add
+
+## Testing
+Project is tested with the GTest. Many cases are not covered by Unit Test
